@@ -13,8 +13,9 @@ import clsx from 'clsx';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './Cart.module.scss';
+import { NavLink } from 'react-bootstrap';
 
-const Component = ({className, children}) => (
+const Component = ({className}) => (
   <Container className={clsx(className, styles.root)}>
     <Row className="justify-content-md-center">
       <Col xs lg="2">
@@ -59,16 +60,16 @@ const Component = ({className, children}) => (
       </Col>
       <hr />
     </Row>
-    <Row className="justify-content-md-end">
+    <Row className={clsx('justify-content-md-end', styles.checkout)}>
+      <textarea placeholder='Additional comments to the order'></textarea>
       <p className={styles.txtAlignEnd}>Delivery: $15</p>
       <p className={styles.txtAlignEnd}>Subtotal: $55</p>
+      <Button as={NavLink} href="/checkout" className={styles.btn} variant="primary">Checkout</Button>
     </Row>
-
   </Container>
 );
 
 Component.propTypes = {
-  children: PropTypes.node,
   className: PropTypes.string,
 };
 
