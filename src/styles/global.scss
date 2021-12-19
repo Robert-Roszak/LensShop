@@ -1,1 +1,11 @@
 @import "settings.scss";
+@import "normalize.scss";
+@import "~bootstrap/scss/bootstrap";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.root {
+  background-color: yellow;
+}

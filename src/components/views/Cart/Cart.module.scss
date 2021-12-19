@@ -1,4 +1,27 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+
+  .center {
+    text-align: center;
+  }
+
+  .quantity {
+    margin: 5px 0;
+
+    .btn {
+      height: 50%;
+      margin: 0 10px;
+    }
+
+    .quantityInput {
+      width: 20%;
+      height: 50%;
+      text-align: center;
+    }
+  }
+
+  .txtAlignEnd {
+    text-align: end;
+  }
+}
