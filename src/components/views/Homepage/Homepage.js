@@ -1,34 +1,35 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Products } from '../Products/Products';
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+
 import PropTypes from 'prop-types';
-
 import clsx from 'clsx';
-
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './Homepage.module.scss';
 
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>Homepage</h2>
-    {children}
-  </div>
-);
+const Component = ({className}) => {
+  const products = useSelector((state) => state.products);
 
-Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
+  return (
+    <div className={clsx(className, styles.root)}>
+      <h2>Homepage</h2>
+      <Container>
+        <Row className="g-4">
+          {
+            products.data.map(product => (<Products product={product} key={product._id}/>))
+          }
+        </Row>
+      </Container>
+    </div>
+  );
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
-
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+Component.propTypes = {
+  className: PropTypes.string,
+};
 
 export {
   Component as Homepage,

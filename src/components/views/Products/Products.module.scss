@@ -1,0 +1,57 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  display: flex;
+
+  .imageWrapper {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+
+    .saleText {
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 30px 15px 5px 15px;
+      background-color: rgba(255, 0, 0, 0.8);
+      border-radius: 50%;
+      border: 1px black solid;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    img {
+      object-fit: cover;
+      height: 300px;
+      width: 400px;
+    }
+    // add media img sizes !!
+  }
+
+
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .white {
+      color: white;
+      text-decoration: none;
+    }
+
+    .salePrice {
+      .oldPrice {
+        color: red;
+        text-decoration: line-through;
+      }
+
+      .newPrice {
+        color: green;
+      }
+
+    }
+
+  }
+}
