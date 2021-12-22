@@ -5,10 +5,7 @@ const Product = require('../models/product.model');
 
 router.get('/products', async (req, res) => {
   try {
-    const result = await Product
-      .find({status: 'published'})
-      .select('author created title photo')
-      .sort({created: -1});
+    const result = await Product.find();
     if(!result) res.status(404).json({ product: 'Not found' });
     else res.json(result);
   }

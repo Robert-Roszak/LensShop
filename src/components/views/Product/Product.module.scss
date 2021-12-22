@@ -1,4 +1,49 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+
+  .allBorders {
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .borderBottom {
+    border-bottom: 1px solid black;
+  }
+
+  .image {
+    height: 400px;
+    object-fit: cover;
+  }
+
+  .buy {
+    flex-direction: row;
+
+    .btn {
+      width: 81%;
+      margin: 5px 10px;
+    }
+
+    .quantityInput {
+      width: 15%;
+      margin: 5px 0;
+      text-align: center;
+    }
+  }
+
+  .salePrice {
+    .oldPrice {
+      color: red;
+      text-decoration: line-through;
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+    }
+
+    .newPrice {
+      color: green;
+    }
+  }
+
+}
