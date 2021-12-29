@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { IMAGES_URL } from '../../../config';
 
 import { fetchOneProductFromAPI } from '../../../redux/productRedux';
+import { addToCart as addToCartRedux } from '../../../redux/cartRedux';
 
 import clsx from 'clsx';
 
@@ -15,6 +16,7 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 import styles from './Product.module.scss';
 
@@ -23,12 +25,32 @@ const Component = ({className}) => {
   const dispatch = useDispatch();
   const {id} = useParams();
 
+  const [quantity, setQuantity] = useState(0);
+
   useEffect(() => {
     dispatch(fetchOneProductFromAPI(id));
   },[dispatch, id]);
 
   const product = useSelector((state) => state.products.oneProduct);
-  console.log('product: ', product);
+
+  const handleAddToCart = (event, product) => {
+    event.preventDefault();
+    if (quantity === null || quantity === 0) {
+      alert('Please provide quantity');
+    }
+    else {
+      const toCart = {
+        description: product.description,
+        name: product.name,
+        price: product.price,
+        sale: product.sale,
+        src: product.src,
+        _id: product._id,
+        quantity: parseInt(quantity),
+      };
+      dispatch(addToCartRedux(toCart));
+    }
+  };
 
   if (product) {
     return (
@@ -78,10 +100,9 @@ const Component = ({className}) => {
               }
               </p>
             </Row>
-            <Row className={styles.buy}>
-              <input type="number" id='quantity' name='quantity' className={styles.quantityInput} defaultValue="0" min="0" max={product.inStock} />
-              {/* <input type="number" id="tentacles" name="tentacles" min="10" max="100"></input> */}
-              <Button variant="primary" className={styles.btn}>Add to cart</Button>
+            <Row className={styles.buy} as={Form}>
+              <Form.Control type="number" id='quantity' name='quantity' className={styles.quantityInput} defaultValue={quantity} min="0" max={product.inStock} onChange={e => setQuantity(e.target.value)} />
+              <Button variant="primary" type="submit" className={styles.btn} onClick={((event) => handleAddToCart(event, product))}>Add to cart</Button>
             </Row>
           </Col>
         </Row>
