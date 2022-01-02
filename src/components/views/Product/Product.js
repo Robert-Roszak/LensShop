@@ -32,13 +32,27 @@ const Component = ({className}) => {
   },[dispatch, id]);
 
   const product = useSelector((state) => state.products.oneProduct);
+  const cart = useSelector((state) => state.cart.products);
 
   const handleAddToCart = (event, product) => {
     event.preventDefault();
+    let canItBeAdded = false;
+
+    if (cart) {
+      cart.filter(cartItem => {
+        if (cartItem._id === product._id) {
+          if (cartItem.quantity < product.inStock) return canItBeAdded = true;
+          else return alert('No more products in stock');
+        }
+        else return canItBeAdded = true;
+      });
+    }
+    else canItBeAdded = true;
+
     if (quantity === null || quantity === 0) {
       alert('Please provide quantity');
     }
-    else {
+    else if (canItBeAdded) {
       const toCart = {
         description: product.description,
         name: product.name,
@@ -50,6 +64,13 @@ const Component = ({className}) => {
       };
       dispatch(addToCartRedux(toCart));
     }
+  };
+
+  const handleQuantity = (value, inStock) => {
+    const parsedValue = parseInt(value);
+    if (parsedValue <= inStock && value >= 0) setQuantity(value);
+    else if (parsedValue > inStock) alert('No more products in stock');
+    else if (parsedValue < 0) alert('Value cannot be lower than 0');
   };
 
   if (product) {
@@ -94,14 +115,23 @@ const Component = ({className}) => {
             <Row>
               <p>Availability: {
                 (product.inStock === null || parseInt(product.inStock) === 0) ?
-                  'out of stock!'
+                  <strong>out of stock!</strong>
                   :
                   `${product.inStock} products in stock`
               }
               </p>
             </Row>
             <Row className={styles.buy} as={Form}>
-              <Form.Control type="number" id='quantity' name='quantity' className={styles.quantityInput} defaultValue={quantity} min="0" max={product.inStock} onChange={e => setQuantity(e.target.value)} />
+              <Form.Control
+                type="number"
+                id='quantity'
+                name='quantity'
+                className={styles.quantityInput}
+                value={quantity}
+                min="0"
+                max={product.inStock}
+                onChange={e => handleQuantity(e.target.value, product.inStock)}
+              />
               <Button variant="primary" type="submit" className={styles.btn} onClick={((event) => handleAddToCart(event, product))}>Add to cart</Button>
             </Row>
           </Col>

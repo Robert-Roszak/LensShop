@@ -2,6 +2,15 @@
 
 .root {
 
+  .emptyCart {
+    text-align: center;
+    justify-content: center;
+
+    .btn {
+      color: white;
+    }
+  }
+
   .center {
     text-align: center;
   }
@@ -28,6 +37,27 @@
 
     .txtAlignEnd {
       text-align: end;
+    }
+  }
+
+  .test {
+    align-self: center;
+  }
+
+  .cartItem {
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+
+    .image {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .itemDetails a {
+      padding: 0;
     }
   }
 

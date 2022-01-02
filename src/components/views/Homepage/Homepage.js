@@ -41,8 +41,6 @@ const Component = ({className}) => {
       </Spinner>
     );
   }
-
-
 };
 
 Component.propTypes = {
@@ -51,6 +49,5 @@ Component.propTypes = {
 
 export {
   Component as Homepage,
-  // Container as Homepage,
   Component as HomepageComponent,
 };
