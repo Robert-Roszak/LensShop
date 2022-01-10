@@ -1,7 +1,7 @@
 @import '../../../styles/settings.scss';
 
 .root {
-
+  padding-bottom: 50px;
   .emptyCart {
     text-align: center;
     justify-content: center;
@@ -33,6 +33,7 @@
   .checkout {
     .btn {
       color: white;
+      width: 100%;
     }
 
     .txtAlignEnd {
@@ -40,7 +41,7 @@
     }
   }
 
-  .test {
+  .alignCenter {
     align-self: center;
   }
 

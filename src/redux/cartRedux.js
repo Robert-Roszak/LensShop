@@ -1,3 +1,5 @@
+import Axios from 'axios';
+
 /* selectors */
 export const getCart = ({cart}) => cart.products;
 
@@ -12,6 +14,7 @@ const FETCH_ERROR = createActionName('FETCH_ERROR');
 const ADD_PRODUCT = createActionName('ADD_PRODUCT');
 const REMOVE_PRODUCT = createActionName('REMOVE_PRODUCT');
 const CHANGE_QUANTITY = createActionName('CHANGE_QUANTITY');
+const ADD_COMMENT = createActionName('ADD_COMMENT');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
@@ -20,12 +23,29 @@ export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const addToCart = payload => ({ payload, type: ADD_PRODUCT });
 export const removeFromCart = payload => ({ payload, type: REMOVE_PRODUCT });
 export const handleQuantity = (quantity, _id) => ({ quantity, _id, type: CHANGE_QUANTITY });
+export const addComment = (comment, _id) => ({ comment, _id, type: ADD_COMMENT });
+
 
 /* thunk creators */
 export const fetchCart = () => {
   return (dispatch) => {
     const storage = JSON.parse(localStorage.getItem('cart'));
     dispatch(fetchSuccess(storage));
+  };
+};
+
+export const addOrder = order => {
+  return (dispatch) => {
+    Axios.post(`http://localhost:8000/api/order/`, order)
+      .then((res) => {
+        console.log('res.data ', res.data);
+        // handle data return, like forward user to order/:res.data.orderId ?
+        // cleaning of localStorage disabled for the time being during app development
+        //localStorage.removeItem('cart');
+      })
+      .catch((err) => {
+        dispatch(fetchError(err.message || true));
+      });
   };
 };
 
@@ -65,11 +85,10 @@ export const reducer = (statePart = [], action = {}) => {
 
     case ADD_PRODUCT: {
       const product = action.payload;
-      let received = JSON.parse(localStorage.getItem('cart'));
-      let newStatePart = statePart.products || [];
+      const received = JSON.parse(localStorage.getItem('cart')) || [];
+      const newStatePart = statePart.products || [];
 
       if (!received || received.length === 0) {
-        received = [];
         received.push(product);
         localStorage.setItem('cart', JSON.stringify(received));
         newStatePart.push(product);
@@ -104,8 +123,8 @@ export const reducer = (statePart = [], action = {}) => {
     }
 
     case REMOVE_PRODUCT: {
-      let received = JSON.parse(localStorage.getItem('cart'));
-      let toStay = received.filter(item => item._id !== action.payload._id);
+      const received = JSON.parse(localStorage.getItem('cart'));
+      const toStay = received.filter(item => item._id !== action.payload._id);
       localStorage.setItem('cart', JSON.stringify(toStay));
       return {
         ...statePart,
@@ -124,13 +143,33 @@ export const reducer = (statePart = [], action = {}) => {
         return statePart;
       });
 
-      let received = JSON.parse(localStorage.getItem('cart'));
+      const received = JSON.parse(localStorage.getItem('cart'));
       const toEdit = received.filter(item => item._id === _id);
       toEdit[0].quantity += quantity;
-      let toStay = received.filter(item => item._id !== _id);
+      const toStay = received.filter(item => item._id !== _id);
       toStay.push(toEdit[0]);
       localStorage.setItem('cart', JSON.stringify(toStay));
 
+      return {
+        ...statePart,
+      };
+    }
+
+    case ADD_COMMENT: {
+      const comment = action.comment;
+      const _id = action._id;
+
+      const received = JSON.parse(localStorage.getItem('cart'));
+      const toEdit = received.filter(item => item._id === _id);
+      toEdit[0].comment = comment;
+      const toStay = received.filter(item => item._id !== _id);
+      toStay.push(toEdit[0]);
+      localStorage.setItem('cart', JSON.stringify(toStay));
+
+      statePart.products.filter(item => {
+        if (item._id === _id) item.comment = comment;
+        return statePart;
+      });
       return {
         ...statePart,
       };

@@ -23,9 +23,9 @@ const Component = ({className}) => {
   if (products) {
     return (
       <div className={clsx(className, styles.root)}>
-        <h2>Homepage</h2>
         <Container>
           <Row className="g-4">
+            <h2>Our products</h2>
             {
               products.data.map(product => (<Products product={product} key={product._id}/>))
             }
