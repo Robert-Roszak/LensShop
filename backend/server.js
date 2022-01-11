@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+require('dotenv').config();
 //const helmet = require('helmet');
 
 const productsRoutes = require('./routes/products.routes');
