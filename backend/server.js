@@ -4,26 +4,25 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const helmet = require('helmet');
 
 const productsRoutes = require('./routes/products.routes');
 const orderRoutes = require('./routes/order.routes');
 
 const app = express();
 
-/* MONGOOSE */
-mongoose.connect('mongodb://localhost:27017/lensShop', { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-app.use(session({
-  secret: 'hereIsRandomSecretCodeThatNobodyKnowsAbout!',
-  resave: false,
-  saveUninitialized: false,
-  store: new MongoStore({ mongooseConnection: db }),
-}));
+const NODE_ENV = process.env.NODE_ENV;
+
+let dbUri = '';
+if(NODE_ENV === 'production') dbUri = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPASS}@cluster0.gtv2z.mongodb.net/lensShop?retryWrites=true&w=majority`;
+else if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/lensShoptest';
+else dbUri = 'mongodb://localhost:27017/lensShop';
 
 /* MIDDLEWARE */
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
 /* API ENDPOINTS */
 app.use('/api', productsRoutes);
@@ -41,7 +40,15 @@ app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
-
+/* MONGOOSE */
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+app.use(session({
+  secret: 'hereIsRandomSecretCodeThatNobodyKnowsAbout!',
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: db }),
+}));
 
 db.once('open', () => {
   console.log('Successfully connected to the database');
