@@ -7,7 +7,7 @@
     "start-silent": "run-p start > /dev/null",
     "start:react": "react-scripts start",
     "start-and-test": "run-p start-silent test ",
-    "start:backend": "nodemon backend/server.js",
+    "start:backend": "npx nodemon backend/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --noStackTrace",
     "test-all": "react-scripts test --watchAll=false --noStackTrace",
