@@ -4,7 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const helmet = require('helmet');
+//const helmet = require('helmet');
 
 const productsRoutes = require('./routes/products.routes');
 const orderRoutes = require('./routes/order.routes');
@@ -15,7 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+//app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
 /* API ENDPOINTS */
 app.use('/api', productsRoutes);
