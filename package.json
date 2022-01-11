@@ -8,7 +8,7 @@
     "start:react": "react-scripts start",
     "start-and-test": "run-p start-silent test ",
     "start:backend": "npx nodemon backend/server.js",
-    "build": "yarn install && yarn build",
+    "build": "yarn run install && yarn run build",
     "test": "react-scripts test --noStackTrace",
     "test-all": "react-scripts test --watchAll=false --noStackTrace",
     "test-related": "react-scripts test --watchAll=false --noStackTrace --findRelatedTests",
