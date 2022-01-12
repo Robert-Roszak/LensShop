@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { API_URL } from '../config';
 
 /* selectors */
 export const getCart = ({cart}) => cart.products;
@@ -36,7 +37,7 @@ export const fetchCart = () => {
 
 export const addOrder = order => {
   return (dispatch) => {
-    Axios.post(`http://localhost:8000/api/order/`, order)
+    Axios.post(`${API_URL}/order/`, order)
       .then((res) => {
         console.log('res.data ', res.data);
         // handle data return, like forward user to order/:res.data.orderId ?
