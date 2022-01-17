@@ -15,24 +15,8 @@
     text-align: center;
   }
 
-  .quantity {
-    margin: 5px 0;
-
-    .btn {
-      height: 50%;
-      margin: 0 10px;
-    }
-
-    .quantityInput {
-      width: 20%;
-      height: 50%;
-      text-align: center;
-    }
-  }
-
   .checkout {
     .btn {
-      color: white;
       width: 100%;
     }
 
@@ -44,22 +28,4 @@
   .alignCenter {
     align-self: center;
   }
-
-  .cartItem {
-    align-items: center;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid black;
-
-    .image {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
-
-    .itemDetails a {
-      padding: 0;
-    }
-  }
-
 }

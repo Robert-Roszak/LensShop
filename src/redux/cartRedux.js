@@ -30,6 +30,7 @@ export const addComment = (comment, _id) => ({ comment, _id, type: ADD_COMMENT }
 /* thunk creators */
 export const fetchCart = () => {
   return (dispatch) => {
+    dispatch(fetchStarted());
     const storage = JSON.parse(localStorage.getItem('cart'));
     dispatch(fetchSuccess(storage));
   };
