@@ -42,8 +42,7 @@ export const addOrder = order => {
       .then((res) => {
         console.log('res.data ', res.data);
         // handle data return, like forward user to order/:res.data.orderId ?
-        // cleaning of localStorage disabled for the time being during app development
-        //localStorage.removeItem('cart');
+        localStorage.removeItem('cart');
       })
       .catch((err) => {
         dispatch(fetchError(err.message || true));
