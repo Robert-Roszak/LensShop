@@ -1,6 +1,2 @@
 https://lens-shop.herokuapp.com/
-
-To run the project locally, clone the repository and follow below steps:
-
-yarn install</br>
-yarn start
+## Heroku link isn't working anymore, working on other hosting. The project won't work locally without DB set.
