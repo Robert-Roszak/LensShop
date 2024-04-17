@@ -1,2 +1,1 @@
-https://lens-shop.herokuapp.com/
-## Heroku link isn't working anymore, working on other hosting. The project won't work locally without DB set.
+This project isn't maintained anymore as it has been rewritten to TypeScript. Check it out [here](https://github.com/Robert-Roszak/Lens-shop-TS), there is also live demo available.
